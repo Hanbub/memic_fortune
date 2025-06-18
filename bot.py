@@ -55,6 +55,7 @@ async def handle_user_text(message: types.Message):
 
     random_sticker = random.choice(list(stickerpacks_objs[pack_name].values()))
     logging.info(f"file_unique_id: {random_sticker["sticker_obj"].file_unique_id}")
+    logging.info(f"file_id: {random_sticker["sticker_obj"].file_id}")
     logging.info(f"emoji: {random_sticker["sticker_obj"].emoji}")
     await bot.send_sticker(
         chat_id=message.chat.id,
