@@ -40,10 +40,11 @@ async def start_handler(message: types.Message):
 async def handle_user_text(message: types.Message):
     pack_name = random.choice(list(stickerpacks_objs.keys()))
     logging.info(f"Selected stickerpack {pack_name}")
+    logging.info(f"Question: {message.text}")
 
     # Load stickers if not already loaded
     if not stickerpacks_objs[pack_name]:
-        logging.info(f"Loading stickerpack: {pack_name}")
+        logging.info(f"Loading empty stickerpack: {pack_name}")
         sticker_set = await bot.get_sticker_set(pack_name)
         stickerpacks_objs[pack_name] = {
             sticker.file_unique_id: {
@@ -53,7 +54,8 @@ async def handle_user_text(message: types.Message):
         }
 
     random_sticker = random.choice(list(stickerpacks_objs[pack_name].values()))
-    print(random_sticker)
+    logging.info(f"file_unique_id: {random_sticker["sticker_obj"].file_unique_id}")
+    logging.info(f"emoji: {random_sticker["sticker_obj"].emoji}")
     await bot.send_sticker(
         chat_id=message.chat.id,
         sticker=random_sticker["sticker_obj"].file_id,
