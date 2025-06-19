@@ -66,15 +66,15 @@ async def handle_user_text(message: types.Message):
         reply_to_message_id=message.message_id,
     )
 
-# Dummy web server to bind port 8080 for Render
+# Dummy web server to bind /healthz for Render
 async def dummy_web_server():
     async def handle(request):
         return web.Response(text="Bot is alive!")
     app = web.Application()
-    app.add_routes([web.get("/", handle)])
+    app.add_routes([web.get("/healthz", handle)])
     runner = web.AppRunner(app)
     await runner.setup()
-    site = web.TCPSite(runner, "0.0.0.0", 8080)
+    site = web.TCPSite(runner, "0.0.0.0")
     await site.start()
 
 # Main entry
